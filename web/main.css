@@ -1,0 +1,166 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #f0f0f0;
+	font-family: helvetica, Arial, sans-serif;
+	font-size: 20px;
+}
+
+#logo {
+	display: block;
+	width: 200px;
+	margin: 40px auto;
+	background: none;
+}
+
+#container {
+	width: 760px;
+	margin: 0 auto;
+	padding: 40px;
+}
+
+#container:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+#main-content {
+	width: 500px;
+	float: left;
+}
+
+#sidebar {
+	width: 200px;
+	float: left;
+	padding: 20px 20px 0;
+	margin: 0 0 0 20px;
+}
+
+#sidebar h3 {
+	background: #333;
+	padding: 10px 10px 10px 30px;
+	margin:  0 0 5px;
+	color: white;
+	position: relative;
+	left: -30px;
+}
+
+#sidebar .widget {
+	margin: 0 0 20px;
+}
+
+
+h1, h2, h3 {
+	font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+	font-weight: normal;
+}
+
+h1 {
+	font-size: 40px;
+}
+
+a:link {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+
+form {
+	text-align: left;
+	width: 300px;
+	margin: 20px auto 0;
+}
+
+form label {
+	display: block;
+	width: 290px;
+	padding: 5px;
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: bold;
+	background: #333;
+	color: white;	
+}
+form input {
+	display: block;
+	width: 290px;
+	padding: 5px;
+	margin: 0 0 10px;
+	font-size: 22px;
+	font-family: Georgia, Times, serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizelegibility;
+	border: none;
+}
+
+form input[type="submit"] {
+	background: #333;
+	color: white;
+	cursor: pointer;
+	width: 300px;
+}
+
+select {
+	display: block;
+	width: 300px;
+	padding: 5px;
+	margin: 0 0 10px;
+	font-size: 22px;
+	font-family: Georgia, Times, serif;
+	font-style: bold;
+	border: none;
+	text-align: center;
+}
+
+/* Shopping Cart */
+
+#sidebar_cart {
+	width: 250px;
+	float: left;
+	padding: 20px 20px 0;
+	margin: -750px 0 0 1120px;
+}
+
+#sidebar_cart h3 {
+	background: #333;
+	padding: 10px 10px 10px 30px;
+	margin: 0 0 5px;
+	color: white;
+}
+
+#sidebar_purchase {
+	width: 250px;
+	float: left;
+	padding: 20px 20px 0;
+	margin: -250px 0 0 1120px
+}
+
+#sidebar_purchase h3 {
+	background: #333;
+	width: 260px;
+	padding: 10px 10px 10px 30px;
+	margin: 0 0 5px;
+	color: white;
+}
+
+#sidebar_history {
+	width: 250px;
+	float: left;
+	padding: 20px 20px 0;
+	margin: -250px 0 0 1120px;
+}
+
+#sidebar_history h3 {
+	background: #333;
+	width: 260px;
+	padding: 10px 10px 10px 30px;
+	margin: 0 0 5px;
+	color: white;
+}
