@@ -15,7 +15,11 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "register", urlPatterns = {"/register"})
 public class register extends HttpServlet 
 {
-
+    public String firstNameError = "";
+    public String lastNameError = "";
+    public String userNameError = "";
+    public String passwordError = "";
+    public String emailError = "";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
@@ -59,14 +63,19 @@ public class register extends HttpServlet
                                 out.println("<form action =\"register\" method= \"post\" id= \"account\">");
                                 out.println("<label for=\"first_name\">First Name</label>");
                                 out.println("<input name= \"firstName\" type=\"text\" id=\"first_name\">");
+                                out.println("<p style=\"color:red\">" + firstNameError + "</p>");
                                 out.println("<label for=\"last_name\">Last Name</label>");
                                 out.println("<input name= \"lastName\" type=\"text\" id=\"last_name\">");
+                                out.println("<p style=\"color:red\">" + lastNameError + "</p>");
                                 out.println("<label for=\"user_Name\">User Name</label>");
                                 out.println("<input name= \"userName\" type= \"text\" id= \"user_Name\">");
+                                out.println("<p style=\"color:red\">" + userNameError + "</p>");
                                 out.println("<label for=\"email\">email</label>");
                                 out.println("<input name= \"email\" type=\"email\" id=\"email\">");
+                                out.println("<p style=\"color:red\">" + emailError + "</p>");
                                 out.println("<label for=\"password\">password</label>");
                                 out.println("<input name= \"password\" type=\"password\" id=\"password\">");
+                                out.println("<p style=\"color:red\">" + passwordError + "</p>");
                                 out.println("<label>Age</label>");
                                 out.println("<select name= \"age\" form= \"account\">");
                                 out.println("<option value=\"18-24\">18-24</option>");
@@ -80,9 +89,17 @@ public class register extends HttpServlet
                                 out.println("</div>"); // end container
                                 out.println("</body>");
                                 out.println("</html>");
+                                
+                                firstNameError = "";
+                                lastNameError = "";
+                                userNameError = "";
+                                passwordError = "";
+                                emailError = "";
+                                
                         }
                         else
-                        {
+                        {   
+                            
                             Gameazon userSession = new Gameazon();
 
                             userSession.setFirstName(firstName);
@@ -150,7 +167,23 @@ public class register extends HttpServlet
                 response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) 
                 {
-                      doGet(request, response);
+                    String firstName = request.getParameter("firstName");
+                    String lastName = request.getParameter("lastName");
+                    String userName = request.getParameter("userName");
+                    String password = request.getParameter("password");
+                    String email = request.getParameter("email"); 
+                    
+                    if (firstName == null || firstName.equals(""))
+                        firstNameError = "Please enter your first name";
+                    if (lastName == null || lastName.equals(""))
+                        lastNameError = "Please enter your last name";
+                    if (userName == null || userName.equals(""))
+                        userNameError = "Please enter your userName";
+                    if (email == null || email.equals(""))
+                        emailError = "Please enter your email address";
+                    if (password == null || password.equals(""))
+                        passwordError = "Please enter a password";
+                    doGet(request, response);
                 }
     }
 

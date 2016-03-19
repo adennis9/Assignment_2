@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/login"})
 public class login extends HttpServlet 
 {
+    
+    String errorMessage = "";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
@@ -50,11 +52,12 @@ public class login extends HttpServlet
                                 out.println("<input name= \"pass\"type=\"password\" id=\"password\">");
                                 out.println("<input type=\"submit\" value=\"Login\">");
                                 out.println("</form>"); // end form
-                                //out.println(errorMessage);
+                                out.println("<p style=\"color:red\">" + errorMessage + "</p>");
                                 out.println("</div>"); // end main-content
                                 out.println("</div>");// end container
                                 out.println("</body>");
                                 out.println("</html>");
+                                errorMessage = "";
                             }
                         else
                         {
@@ -69,7 +72,7 @@ public class login extends HttpServlet
                                     out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
                                     out.println("<div id=\"container\">");
                                     out.println("<div id=\"main-content\">");
-                                    out.println("<h1>Hi, " + loggedIn.getFirstName() + loggedIn.getLastName() + "! <br> You are logged in!</h1>");
+                                    out.println("<h1>Hi, " + loggedIn.getFirstName() + " " + loggedIn.getLastName() + "! <br> You are logged in!</h1>");
                                     out.println("<br>");
                                     out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
                                     out.println("</div>"); //end main-content
@@ -87,11 +90,23 @@ public class login extends HttpServlet
                 response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) 
                 {
+                   //out.println("doPost!");
                    String userName = request.getParameter("userName"); 
                    String password = request.getParameter("pass");
-
+                  // out.println("<br>" + userName);
+                   //out.println("<br>" + password);
+                   
                    Gameazon checkUser = GameazonUserHashMap.userHashMap.get(userName);
-
+                    
+                    if (checkUser == null)
+                    {
+                        errorMessage = "Incorrect user name password combo";
+                       doGet(request, response);
+                    }
+                        
+                        //out.println(userName.equals(checkUser.getUserName()));
+                        //out.println(password.equals(checkUser.getPassword()));
+                   
                    if (userName.equals(checkUser.getUserName()) && password.equals(checkUser.getPassword()))
                    {
                         out.println("<!DOCTYPE html>");
@@ -104,7 +119,7 @@ public class login extends HttpServlet
                         out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
                         out.println("<div id=\"container\">");
                         out.println("<div id=\"main-content\">");
-                        out.println("<h1>Hi, " + checkUser.getFirstName() + checkUser.getLastName() + "! <br> You are logged in!</h1>");
+                        out.println("<h1>Hi, " + checkUser.getFirstName() + " " + checkUser.getLastName() + "! <br> You are logged in!</h1>");
                         out.println("<br>");
                         out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
                         out.println("</div>"); //end main-content
@@ -116,7 +131,11 @@ public class login extends HttpServlet
                         mySession.setAttribute("session", checkUser);
                    }
                    else
-                     out.println("Incorrect User Name and password combo");
+                   {
+                       errorMessage = "Incorrect user name password combo";
+                       doGet(request, response);
+                     
+                   }
                 }
     }
 
