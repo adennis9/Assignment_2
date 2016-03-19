@@ -29,11 +29,10 @@ public class login extends HttpServlet
                         HttpSession mySession = request.getSession();
 
                         Gameazon loggedIn = (Gameazon)mySession.getAttribute("session");
+                        
 
-
-                        //String errorMessage;
-                        if (loggedIn == null)
-                        {
+                            if (loggedIn == null)
+                            {
                                 out.println("<!DOCTYPE html>");
                                 out.println("<html>");
                                 out.println("<head>");
@@ -59,8 +58,8 @@ public class login extends HttpServlet
                                 out.println("</html>");
                                 errorMessage = "";
                             }
-                        else
-                        {
+                            else
+                            {
 
                                     out.println("<!DOCTYPE html>");
                                     out.println("<html>");
@@ -75,13 +74,18 @@ public class login extends HttpServlet
                                     out.println("<h1>Hi, " + loggedIn.getFirstName() + " " + loggedIn.getLastName() + "! <br> You are logged in!</h1>");
                                     out.println("<br>");
                                     out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
+                                    out.println("<form action= \"login\" method= \"post\">");
+                                    out.println("<input type= \"hidden\" name= \"logOut\" value= \"logginout\">");
+                                    out.println("<input type= \"submit\" value= \"Logout\">");
+                                    out.println("</form>");
                                     out.println("</div>"); //end main-content
                                     out.println("</div>"); // end container
                                     out.println("</body>");
                                     out.println("</html>");
-                        }
+                            }
                 }
-            }
+
+        }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -97,7 +101,20 @@ public class login extends HttpServlet
                    //out.println("<br>" + password);
                    
                    Gameazon checkUser = GameazonUserHashMap.userHashMap.get(userName);
-                    
+                   
+                   HttpSession mySession = request.getSession();
+                   
+                   String logOut = request.getParameter("logOut");
+                   
+                   if (logOut != null)
+                   {
+                       mySession.invalidate();
+                       logOut = null;
+                       doGet(request, response);
+                       
+                   }
+                   
+                   
                     if (checkUser == null)
                     {
                         errorMessage = "Incorrect user name password combo";
@@ -121,13 +138,17 @@ public class login extends HttpServlet
                         out.println("<div id=\"main-content\">");
                         out.println("<h1>Hi, " + checkUser.getFirstName() + " " + checkUser.getLastName() + "! <br> You are logged in!</h1>");
                         out.println("<br>");
-                        out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
+                        out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>"); 
+                        out.println("<form action= \"login\" method= \"post\">");
+                        out.println("<input type= \"hidden\" name= \"logOut\" value= \"logginout\">");
+                        out.println("<input type= \"submit\" value= \"Logout\">");
+                        out.println("</form>");
                         out.println("</div>"); //end main-content
                         out.println("</div>"); // end container
                         out.println("</body>");
                         out.println("</html>");
                         
-                        HttpSession mySession = request.getSession();
+                        mySession = request.getSession();
                         mySession.setAttribute("session", checkUser);
                    }
                    else
