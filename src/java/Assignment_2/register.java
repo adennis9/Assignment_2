@@ -90,7 +90,7 @@ public class register extends HttpServlet
                             userSession.setUserName(userName);
                             userSession.setPassword(password);
                             userSession.setEmail(email);
-                            userSession.setAge(age);
+                            userSession.setAgeRange(age);
 
                             mySession.setAttribute("session", userSession);
                             GameazonUserHashMap.userHashMap.put(lastName, userSession);
