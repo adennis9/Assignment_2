@@ -93,7 +93,7 @@ public class register extends HttpServlet
                             userSession.setAgeRange(age);
 
                             mySession.setAttribute("session", userSession);
-                            GameazonUserHashMap.userHashMap.put(lastName, userSession);
+                            GameazonUserHashMap.userHashMap.put(userName, userSession);
 
                             out.println("<!DOCTYPE html>");
                             out.println("<html>");

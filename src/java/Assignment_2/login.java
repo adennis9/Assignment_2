@@ -28,15 +28,10 @@ public class login extends HttpServlet
 
                         Gameazon loggedIn = (Gameazon)mySession.getAttribute("session");
 
-                        String userName = request.getParameter("userName");
-                        String password = request.getParameter("password");
+
                         //String errorMessage;
                         if (loggedIn == null)
                         {
-                            out.println("not logged in");
-                            if (userName == null || userName.equals("") || 
-                            password == null || password.equals(""))
-                            {
                                 out.println("<!DOCTYPE html>");
                                 out.println("<html>");
                                 out.println("<head>");
@@ -61,18 +56,9 @@ public class login extends HttpServlet
                                 out.println("</body>");
                                 out.println("</html>");
                             }
-                        }
                         else
                         {
-                            String lastName = loggedIn.getLastName();
-                            
-                            Gameazon checkUser = GameazonUserHashMap.userHashMap.get(lastName);
-                            
-                                                      
-                            if (checkUser != null)
-                            {
-                                if (userName.equals(checkUser.getUserName()) && password.equals(checkUser.getPassword()))
-                                {
+
                                     out.println("<!DOCTYPE html>");
                                     out.println("<html>");
                                     out.println("<head>");
@@ -83,21 +69,13 @@ public class login extends HttpServlet
                                     out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
                                     out.println("<div id=\"container\">");
                                     out.println("<div id=\"main-content\">");
-                                    out.println("<h1>Hi, " + checkUser.getFirstName() + checkUser.getLastName() + "! <br> You are logged in!</h1>");
+                                    out.println("<h1>Hi, " + loggedIn.getFirstName() + loggedIn.getLastName() + "! <br> You are logged in!</h1>");
                                     out.println("<br>");
                                     out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
                                     out.println("</div>"); //end main-content
                                     out.println("</div>"); // end container
                                     out.println("</body>");
                                     out.println("</html>");
-                                
-                                    mySession.setAttribute("session", checkUser);
-                                }
-                            }
-                            else
-                            {
-                                response.sendRedirect("register");
-                            }
                         }
                 }
             }
@@ -109,7 +87,36 @@ public class login extends HttpServlet
                 response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) 
                 {
-                    doGet(request, response);
+                   String userName = request.getParameter("userName"); 
+                   String password = request.getParameter("pass");
+
+                   Gameazon checkUser = GameazonUserHashMap.userHashMap.get(userName);
+
+                   if (userName.equals(checkUser.getUserName()) && password.equals(checkUser.getPassword()))
+                   {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>GOT EQUIPPED WITH USER ACCOUNT!</title>");
+                        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
+                        out.println("<div id=\"container\">");
+                        out.println("<div id=\"main-content\">");
+                        out.println("<h1>Hi, " + checkUser.getFirstName() + checkUser.getLastName() + "! <br> You are logged in!</h1>");
+                        out.println("<br>");
+                        out.println("<h2><a href=\"storefront\" title=\"Return to Home Page\">Click here to browse our selection!</a></h2>");        
+                        out.println("</div>"); //end main-content
+                        out.println("</div>"); // end container
+                        out.println("</body>");
+                        out.println("</html>");
+                        
+                        HttpSession mySession = request.getSession();
+                        mySession.setAttribute("session", checkUser);
+                   }
+                   else
+                     out.println("Incorrect User Name and password combo");
                 }
     }
 
