@@ -6,7 +6,8 @@ package Assignment_2;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-//import static java.lang.System.out;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "storefront", urlPatterns = {"/storefront"})
 public class storefront extends HttpServlet {
 
+    String successMessage = "";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
@@ -42,6 +44,7 @@ public class storefront extends HttpServlet {
                 out.println("<div id=\"container\">");
                 out.println("<div id=\"main-content\">");
                 out.println("<h1 align= \"center\">Hi, " + checkUser.getFirstName() + " " + checkUser.getLastName() + "</h1><br>");
+                out.println("<p style= \"color:red\">" + successMessage + "</p>");
                 out.println("<table>");
                 out.println("<tr>");
                 out.println("<th>Title</th>");
@@ -51,7 +54,7 @@ public class storefront extends HttpServlet {
                 out.println("</tr>"); // end tr
                 out.println("<tr><form action= \"storefront\" method= \"post\" id= \"table\">");
                 out.println("<td><img src=\"images/contra.jpg\"></td>");
-                out.println("<input type=\"hidden\" value=\"images/contra.jpg\" name= \"image\">");
+                out.println("<input type=\"hidden\" value=\"contra.jpg\" name= \"image\">");
                 out.println("<td>$49.99</td>");
                 out.println("<input type= \"hidden\" value= \"49.99\" name= \"price\">");
                 out.println("<td>");
@@ -72,7 +75,7 @@ public class storefront extends HttpServlet {
                 out.println("</form></tr>"); //end tr
                 out.println("<tr><form action= \"storefront\" method= \"post\">");
                 out.println("<td><img src=\"images/dd2.jpg\"></td>");
-                out.println("<input type= \"hidden\" value= \"images/dd2.jpg\" name= \"image\">");
+                out.println("<input type= \"hidden\" value= \"dd2.jpg\" name= \"image\">");
                 out.println("<td>$39.99</td>");
                 out.println("<input type= \"hidden\" value= \"39.99\" name = \"price\">");
                 out.println("<td>");
@@ -93,7 +96,7 @@ public class storefront extends HttpServlet {
                 out.println("</form></tr>"); //end form and tr
                 out.println("<tr><form action= \"storefront\" method= \"post\" name= \"add\">");
                 out.println("<td><img src=\"images/smw.jpg\"></td>");
-                out.println("<input type= \"hidden\" value= \"images/smw.jpg\" name= \"image\">");
+                out.println("<input type= \"hidden\" value= \"smw.jpg\" name= \"image\">");
                 out.println("<td>$59.99</td>");
                 out.println("<input type= \"hidden\" value= \"59.99\" name= \"price\">");
                 out.println("<td>");
@@ -125,6 +128,7 @@ public class storefront extends HttpServlet {
                 out.println("</div>"); //end sidebar_cart
                 out.println("</body>");
                 out.println("</html>");
+                successMessage = "";
             }
             else
                 response.sendRedirect("login");
@@ -136,12 +140,39 @@ public class storefront extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
-    {    
-        doGet(request, response);
-    }
+   {
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) 
+                {  
+                    
+                    String imageName = request.getParameter("image");
+                    String q = request.getParameter("quantity");
+                    float price = Float.valueOf(request.getParameter("price"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    float total = (price * quantity);
+                    DecimalFormat df = new DecimalFormat("###.##");
+                    String formattedTotal = df.format(total);
+                    
+                    //out.println(imageName);
+                    //out.println(quantity);
+                    //out.println(price);
+
+                    GameazonUserHashMap.checkoutHash.put(imageName, q);
+                    
+                   // for (String key : GameazonUserHashMap.checkoutHash.keySet())
+                    //{
+                       // out.println(key + " - " + GameazonUserHashMap.checkoutHash.get(key));
+                      //  out.println("<br>");
+                    //}
+;                   
+                    successMessage = "Item successfully added to the cart!";
+                    doGet(request, response);
+                }
+   }
 
     @Override
-    public String getServletInfo() {
+    public String getServletInfo() 
+    {
         return "Short description";
     }// </editor-fold>
 

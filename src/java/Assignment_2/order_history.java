@@ -84,7 +84,7 @@ public class order_history extends HttpServlet {
             out.println("<td><img src=\"images/dd2.jpg\"></td>");
             out.println("<td>Andrew Dennis</td>");
             out.println("<td>1</td>");
-            out.println("<th>1/30/2016</th>");
+            out.println("<td>1/30/2016</td>");
             out.println("</tr>"); // end tr
             out.println("</table>");
             out.println("</div>"); // end main-content
