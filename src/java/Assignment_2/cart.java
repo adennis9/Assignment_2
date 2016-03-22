@@ -58,6 +58,9 @@ public class cart extends HttpServlet
             if (loggedIn == null)
                 response.sendRedirect("login");
             
+            if (request.getParameter("clearCart") != null)
+                GameazonUserHashMap.checkoutHash.clear();
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -68,46 +71,53 @@ public class cart extends HttpServlet
             out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
             out.println("<div id=\"container\">");
             out.println("<div id=\"main-content\">");
-            out.println("<table>");
-            out.println("<tr>");
-            out.println("<th>Title</th>");
-            out.println("<th>Quantity</th>");
-            out.println("<th>Total Price</th>");
-            out.println("</tr>"); // end tr
+            out.println("<h1>Hi, " + loggedIn.getFirstName() + " " + loggedIn.getLastName() + "</h1>");
+            if (GameazonUserHashMap.checkoutHash.isEmpty())
+                out.println("<h2>Cart is empty!</h2>");
+            if (!GameazonUserHashMap.checkoutHash.isEmpty())
+            {
+                out.println("<table>");
+                out.println("<tr>");
+                out.println("<th>Title</th>");
+                out.println("<th>Quantity</th>");
+                out.println("<th>Total Price</th>");
+                out.println("</tr>"); // end tr
             
             //out.println("<tr>");
-            for (String key: GameazonUserHashMap.checkoutHash.keySet())
-            {
-                out.println("<tr>");
-                out.println("<td><img src=\"images/" + key  + "\"></td>" );
-                out.println("<td>" + GameazonUserHashMap.checkoutHash.get(key) +  "</td>");
-                if (key.equals("contra.jpg"))
+                for (String key: GameazonUserHashMap.checkoutHash.keySet())
                 {
-                    quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
-                    total = (quantity * 49.99);
+                    out.println("<tr>");
+                    out.println("<td><img src=\"images/" + key  + "\"></td>" );
+                    out.println("<td>" + GameazonUserHashMap.checkoutHash.get(key) +  "</td>");
+                    if (key.equals("contra.jpg"))
+                    {
+                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        total = (quantity * 49.99);
 
-                    formattedTotal = df.format(total);
-                }
-                else if (key.equals("dd2.jpg"))
-                {
-                    quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
-                    total = (quantity * 39.99);
-                    formattedTotal = df.format(total);
+                        formattedTotal = df.format(total);
+                    }
+                    else if (key.equals("dd2.jpg"))
+                    {
+                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        total = (quantity * 39.99);
+                        formattedTotal = df.format(total);
 
-                }
-                else if (key.equals("smw.jpg"))
-                {
-                    quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
-                    total = (quantity * 59.99);
-                    formattedTotal = df.format(total);
+                    }
+                    else if (key.equals("smw.jpg"))
+                    {
+                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        total = (quantity * 59.99);
+                        formattedTotal = df.format(total);
                     
+                    }
+                    completeTotal += total;
+                    out.println("<td>" + formattedTotal + "</td>");
+                    out.println("</tr>");
                 }
-                completeTotal += total;
-                out.println("<td>" + formattedTotal + "</td>");
-                out.println("</tr>");
-            }
-            //out.println("</tr>");
-            out.println("</table>"); // end table
+            
+                //out.println("</tr>");
+                out.println("</table>"); // end table
+                }
             out.println("</div>"); // end main-content
             out.println("</div>"); // end container
             out.println("<div id=\"sidebar_purchase\">");
@@ -120,7 +130,7 @@ public class cart extends HttpServlet
             out.println("<form action=\"checkout\"><input type=\"submit\" value=\"Purchase\"></form>");
             out.println("</div>"); // end widget_purchase
             out.println("<div id=\"widget_purchase\">");
-            out.println("<form action=\"cart\"><input type=\"submit\" value=\"Clear Cart\"></form>");
+            out.println("<form action=\"cart\"><input type=\"submit\" value=\"Clear Cart\" name= \"clearCart\"></form>");
             out.println("</div>"); // end widget_purchase
             out.println("<div id=\"widget_purchase\">");
             out.println("<form action=\"addfunds\" method=\"post\"><input type=\"submit\" value=\"Add Funds\"></form>");
