@@ -45,6 +45,9 @@ public class cart extends HttpServlet
             
             Gameazon loggedIn = (Gameazon)mySession.getAttribute("session");
             
+            String userName = loggedIn.getUserName();
+            
+            Gameazon userCart = GameazonUserHashMap.userHashMap.get(userName);
             int quantity = 0;
             
             double total = 0;
@@ -59,7 +62,7 @@ public class cart extends HttpServlet
                 response.sendRedirect("login");
             
             if (request.getParameter("clearCart") != null)
-                GameazonUserHashMap.checkoutHash.clear();
+                userCart.cartItems.clear();
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -72,9 +75,9 @@ public class cart extends HttpServlet
             out.println("<div id=\"container\">");
             out.println("<div id=\"main-content\">");
             out.println("<h1>Hi, " + loggedIn.getFirstName() + " " + loggedIn.getLastName() + "</h1>");
-            if (GameazonUserHashMap.checkoutHash.isEmpty())
+            if (userCart.cartItems.isEmpty())
                 out.println("<h2>Cart is empty!</h2>");
-            if (!GameazonUserHashMap.checkoutHash.isEmpty())
+            if (!userCart.cartItems.isEmpty())
             {
                 out.println("<table>");
                 out.println("<tr>");
@@ -84,28 +87,28 @@ public class cart extends HttpServlet
                 out.println("</tr>"); // end tr
             
             //out.println("<tr>");
-                for (String key: GameazonUserHashMap.checkoutHash.keySet())
+                for (String key: userCart.cartItems.keySet())
                 {
                     out.println("<tr>");
                     out.println("<td><img src=\"images/" + key  + "\"></td>" );
-                    out.println("<td>" + GameazonUserHashMap.checkoutHash.get(key) +  "</td>");
+                    out.println("<td>" + userCart.cartItems.get(key) +  "</td>");
                     if (key.equals("contra.jpg"))
                     {
-                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        quantity = Integer.parseInt(userCart.cartItems.get(key));
                         total = (quantity * 49.99);
 
                         formattedTotal = df.format(total);
                     }
                     else if (key.equals("dd2.jpg"))
                     {
-                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        quantity = Integer.parseInt(userCart.cartItems.get(key));
                         total = (quantity * 39.99);
                         formattedTotal = df.format(total);
 
                     }
                     else if (key.equals("smw.jpg"))
                     {
-                        quantity = Integer.parseInt(GameazonUserHashMap.checkoutHash.get(key));
+                        quantity = Integer.parseInt(userCart.cartItems.get(key));
                         total = (quantity * 59.99);
                         formattedTotal = df.format(total);
                     

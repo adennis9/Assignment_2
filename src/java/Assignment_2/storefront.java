@@ -153,18 +153,27 @@ public class storefront extends HttpServlet {
                     DecimalFormat df = new DecimalFormat("###.##");
                     String formattedTotal = df.format(total);
                     
+                    HttpSession mySession = request.getSession();
+                    
+                    Gameazon userCart = (Gameazon)mySession.getAttribute("session");
+                    
                     //out.println(imageName);
                     //out.println(quantity);
                     //out.println(price);
 
-                    GameazonUserHashMap.checkoutHash.put(imageName, q);
+                    //GameazonUserHashMap.checkoutHash.put(imageName, q);
                     
                    // for (String key : GameazonUserHashMap.checkoutHash.keySet())
                     //{
                        // out.println(key + " - " + GameazonUserHashMap.checkoutHash.get(key));
                       //  out.println("<br>");
                     //}
-;                   
+                  
+
+                    userCart.addToCart(imageName, q);
+                    
+                    mySession.setAttribute("session", userCart);
+                    GameazonUserHashMap.userHashMap.put(userCart.getUserName(), userCart);
                     successMessage = "Item successfully added to the cart!";
                     doGet(request, response);
                 }
