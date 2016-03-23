@@ -126,19 +126,24 @@ public class cart extends HttpServlet
             out.println("</div>"); // end container
             out.println("<div id=\"sidebar_purchase\">");
             out.println("<div id=\"widget_purchase\">");
-            
-            
             out.println("<h3>Subtotal: $" + df.format(completeTotal) +"</h3>");
             out.println("</div>"); // end widget_purchase
+            out.println("<div id= \"widget_purchase\">");
+            out.println("<h3 id= \"funds\">Funds: $" + df.format(userCart.getWallet()) +"</h3>");
+            out.println("</div>");   
             out.println("<div id=\"widget_purchase\">");
-            out.println("<form action=\"checkout\"><input type=\"submit\" value=\"Purchase\"></form>");
-            out.println("</div>"); // end widget_purchase
+            out.println("<form action=\"addfunds\" method=\"get\"><input type=\"submit\" value=\"Add Funds\"></form>");
+            out.println("</div>");     
             out.println("<div id=\"widget_purchase\">");
             out.println("<form action=\"cart\"><input type=\"submit\" value=\"Clear Cart\" name= \"clearCart\"></form>");
-            out.println("</div>"); // end widget_purchase
+            out.println("</div>"); // end widget_purchase            
             out.println("<div id=\"widget_purchase\">");
-            out.println("<form action=\"addfunds\" method=\"post\"><input type=\"submit\" value=\"Add Funds\"></form>");
-            out.println("</div>");
+            out.println("<form action=\"checkout\" method= \"post\"><input type=\"submit\" value=\"Purchase\">");
+            out.println("<input type= \"hidden\" value= \"" + completeTotal + "\" name= \"total\"></form>");
+            out.println("</div>"); // end widget_purchase
+
+
+ 
             out.println("</div>"); // end sidebar_purchase
             out.println("</body>");
             out.println("</html>");

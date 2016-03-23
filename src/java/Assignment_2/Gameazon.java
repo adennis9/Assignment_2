@@ -97,6 +97,11 @@ public class Gameazon
     
     public void setWallet(float money)
     {
-        wallet = money;
+        wallet += money;
+    }
+    
+    public void decreaseWallet(float money)
+    {
+        wallet -= money;
     }
 }

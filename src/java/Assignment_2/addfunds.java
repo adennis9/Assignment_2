@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Andrew
  */
 package Assignment_2;
 
@@ -12,91 +11,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Andrew
- */
+
 @WebServlet(name = "addfunds", urlPatterns = {"/addfunds"})
-public class addfunds extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet addfunds</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<a href=\"index\" title=\"Return to Home page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
-            out.println("<h1 align=\"center\">Servlet addfunds at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class addfunds extends HttpServlet 
+{
+    String fundsAdded = "";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String funds = request.getParameter("funds");
-            if (funds == null)
-                funds = "zero";
-            else
-                funds = "$" + funds;
+        try (PrintWriter out = response.getWriter()) 
+        {
+            HttpSession mySession = request.getSession();
             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Funds Added!</title>");
-            out.println("<link rel=\"stylesheet\" href=\"main.css\">");
-            out.println("<link href=\"https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=\"stylesheet\" type=\"text/css\">");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<a href=\"index\" title=\"Return to Home page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
-            out.println("<h1 align=\"center\">Amount of funds added: " + funds +  "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            Gameazon funds = (Gameazon)mySession.getAttribute("session");
+            
+            if (funds == null)
+                response.sendRedirect("login");
+            
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -106,21 +42,70 @@ public class addfunds extends HttpServlet {
             out.println("<body>");
             out.println("<a href=\"index\" title=\"Return to Home page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
             out.println("<h1 align=\"center\">Add Funds!</h1>");
-            out.println("<form action=\"addfunds\">");
+            out.println("<form action=\"addfunds\" method= \"post\">");
             out.println("<label for=\"funds\">Funds to add:</label>");       
             out.println("<input type=\"text\" id=\"funds\" name=\"funds\">");
             out.println("<input type=\"submit\" value=\"Add Funds\">");
             out.println("</form>");
+            out.println("<p style= \"color:red\" align= \"center\">" + fundsAdded + "</p>");
+            out.println("<a href= \"cart\"><h3 align= \"center\">Return to cart</h3></a>");
             out.println("</body>");
             out.println("</html>");
+            
+            fundsAdded = "";
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            
+           
+            //out.println("doPost!");                      
+            String stringFunds = request.getParameter("funds");
+            
+            
+            
+            //out.println(stringFunds);
+            //out.println(stringFunds.equals(""));
+            float fundsToAdd = 0;
+            
+            //out.println(stringFunds);
+           
+            HttpSession mySession = request.getSession();
+            
+            Gameazon funds = (Gameazon)mySession.getAttribute("session");
+            
+            if (stringFunds == null || stringFunds.equals(""))
+            {
+                fundsAdded = "No funds added!";
+                doGet(request, response);
+            }
+            else
+            {
+                fundsToAdd = Float.valueOf(stringFunds);
+                fundsAdded = "Amount of funds added: $" + stringFunds + " dollars!";                
+            }
+            
+
+            
+           funds.setWallet(fundsToAdd);
+            
+           mySession.setAttribute("session", funds);
+            
+           GameazonUserHashMap.userHashMap.put(funds.getUserName(), funds);
+            
+            doGet(request, response);
+            
+            
+         
+        }
+    }
+
+
     @Override
     public String getServletInfo() {
         return "Short description";
