@@ -24,7 +24,7 @@ body {
 
 #container:after {
 	content: " ";
-	display: block;
+	display: inline;
 	height: 0;
 	clear: both;
 	visibility: hidden;
@@ -55,14 +55,24 @@ body {
 	margin: 0 0 20px;
 }
 
-
 h1, h2, h3 {
-	font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
-	font-weight: normal;
+	font-family: 'Press Start 2P', sans-serif;
+	font-weight: bolder;
 }
 
 h1 {
-	font-size: 40px;
+	font-size: 25px;
+}
+
+table
+{
+    font-family: 'Press Start 2P', Georgia, Arial, Times, serif;
+    font-size: 12px;
+}
+
+h2, h3
+{
+    font-size: 18px;
 }
 
 a:link {
@@ -76,6 +86,7 @@ form {
 	text-align: left;
 	width: 300px;
 	margin: 20px auto 0;
+        font-family: 'Press Start 2P', Georgia, Times, serif;
 }
 
 form label {
@@ -83,6 +94,7 @@ form label {
 	width: 290px;
 	padding: 5px;
 	font-size: 18px;
+        font-familk: 'Press Start 2P', Georgia, Times, serif;
 	text-transform: uppercase;
 	font-weight: bold;
 	background: #333;
@@ -94,7 +106,7 @@ form input {
 	padding: 5px;
 	margin: 0 0 10px;
 	font-size: 22px;
-	font-family: Georgia, Times, serif;
+	font-family: 'Press Start 2P', Georgia, Times, serif;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizelegibility;
 	border: none;
@@ -105,6 +117,8 @@ form input[type="submit"] {
 	color: white;
 	cursor: pointer;
 	width: 300px;
+        font-family: 'Press Start 2P', Georgia, Times, serif;
+        font-size: 18px;
 }
 
 select {
@@ -113,7 +127,7 @@ select {
 	padding: 5px;
 	margin: 0 0 10px;
 	font-size: 22px;
-	font-family: Georgia, Times, serif;
+	font-family: 'Press Start 2P', Georgia, Times, serif;
 	font-style: bold;
 	border: none;
 	text-align: center;
@@ -125,7 +139,8 @@ select {
 	width: 250px;
 	float: left;
 	padding: 20px 20px 0;
-	margin: -750px 0 0 1120px;
+	margin: 0px 0 0 1420px;
+        position: absolute;
 }
 
 #sidebar_cart h3 {
@@ -138,8 +153,11 @@ select {
 #sidebar_purchase {
 	width: 250px;
 	float: left;
+        display: block;
 	padding: 20px 20px 0;
-	margin: -250px 0 0 1120px
+	margin: 0px 0 0 1420px;
+        position: absolute;
+
 }
 
 #sidebar_purchase h3 {
@@ -154,7 +172,8 @@ select {
 	width: 250px;
 	float: left;
 	padding: 20px 20px 0;
-	margin: -250px 0 0 1120px;
+	margin: 0px 0 0 1420px;
+        position: absolute;
 }
 
 #sidebar_history h3 {

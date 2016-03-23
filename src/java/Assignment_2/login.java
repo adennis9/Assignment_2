@@ -38,6 +38,7 @@ public class login extends HttpServlet
                                 out.println("<head>");
                                 out.println("<title>Login</title>");
                                 out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">");
+                                out.println("<link href=\"https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=\"stylesheet\" type=\"text/css\">");
                                 out.println("</head>");
                                 out.println("<body>");
                                 out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
@@ -66,6 +67,7 @@ public class login extends HttpServlet
                                     out.println("<head>");
                                     out.println("<title>GOT EQUIPPED WITH USER ACCOUNT!</title>");
                                     out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">");
+                                    out.println("<link href=\"https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=\"stylesheet\" type=\"text/css\">");
                                     out.println("</head>");
                                     out.println("<body>");
                                     out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
@@ -131,6 +133,7 @@ public class login extends HttpServlet
                         out.println("<head>");
                         out.println("<title>GOT EQUIPPED WITH USER ACCOUNT!</title>");
                         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">");
+                        out.println("<link href=\"https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=\"stylesheet\" type=\"text/css\">");
                         out.println("</head>");
                         out.println("<body>");
                         out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");

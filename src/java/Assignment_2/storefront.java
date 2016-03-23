@@ -38,6 +38,7 @@ public class storefront extends HttpServlet {
                 out.println("<head>");
                 out.println("<title>Gameazon store</title>");
                 out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"main.css\">");
+                out.println("<link href=\"https://fonts.googleapis.com/css?family=Press+Start+2P\" rel=\"stylesheet\" type=\"text/css\">");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<a href=\"index\" title=\"Return to Home Page\" id=\"logo\"><img src=\"images/newlogo.png\" alt=\"Gameazon controller logo\"></a>");
@@ -156,25 +157,12 @@ public class storefront extends HttpServlet {
                     HttpSession mySession = request.getSession();
                     
                     Gameazon userCart = (Gameazon)mySession.getAttribute("session");
-                    
-                    //out.println(imageName);
-                    //out.println(quantity);
-                    //out.println(price);
-
-                    //GameazonUserHashMap.checkoutHash.put(imageName, q);
-                    
-                   // for (String key : GameazonUserHashMap.checkoutHash.keySet())
-                    //{
-                       // out.println(key + " - " + GameazonUserHashMap.checkoutHash.get(key));
-                      //  out.println("<br>");
-                    //}
-                  
 
                     userCart.addToCart(imageName, q);
                     
                     mySession.setAttribute("session", userCart);
                     GameazonUserHashMap.userHashMap.put(userCart.getUserName(), userCart);
-                    successMessage = "Item successfully added to the cart!";
+                    successMessage = "Item(s) successfully added to the cart!";
                     doGet(request, response);
                 }
    }
