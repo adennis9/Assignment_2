@@ -27,23 +27,35 @@ public class checkout extends HttpServlet
             /* TODO output your page here. You may use following sample code. */
             
             HttpSession mySession = request.getSession();
+
             
             Gameazon checkOut = (Gameazon)mySession.getAttribute("session");
             
             if (checkOut == null)
+            {
                 response.sendRedirect("login");
+                return;
+            }
+            
+            String total = "";
+            float decrementTotal = 0;
+            
+            if (request.getParameter("total") != null)
+            {
+                total = request.getParameter("total");
+                decrementTotal = Float.valueOf(total);
+            }
             
             
-            String total = request.getParameter("total");
             
-            float decrementTotal = Float.valueOf(total);
+            
             float currentWallet = checkOut.getWallet();
             
             if (decrementTotal == 0)
                 message = "<a href= \"storefront\">No items in shopping cart!<br>click here to return to our storepage!</a>";
             
             else if (decrementTotal > currentWallet)
-                message = "<a href= \"addfunds\">Not enough funds. Click here to add more!</a>";
+               message = "<a href= \"addfunds\">Not enough funds. Click here to add more!</a>";
            
             else
             {

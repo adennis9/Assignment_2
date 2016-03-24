@@ -45,6 +45,12 @@ public class cart extends HttpServlet
             
             Gameazon loggedIn = (Gameazon)mySession.getAttribute("session");
             
+            if (loggedIn == null)
+            {
+                response.sendRedirect("login");
+                return;
+            }
+            
             String userName = loggedIn.getUserName();
             
             Gameazon userCart = GameazonUserHashMap.userHashMap.get(userName);
@@ -58,8 +64,7 @@ public class cart extends HttpServlet
             
             
             //out.println(loggedIn);
-            if (loggedIn == null)
-                response.sendRedirect("login");
+
             
             if (request.getParameter("clearCart") != null)
                 userCart.cartItems.clear();

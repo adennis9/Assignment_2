@@ -79,7 +79,7 @@ public class addfunds extends HttpServlet
             
             Gameazon funds = (Gameazon)mySession.getAttribute("session");
             
-            if (stringFunds == null || stringFunds.equals(""))
+            if (stringFunds.equals("") || funds.isFloat(stringFunds) == false || stringFunds == null)
             {
                 fundsAdded = "No funds added!";
                 doGet(request, response);
